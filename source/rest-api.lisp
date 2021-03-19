@@ -4,11 +4,9 @@
            #:get-cluster-version
            #:get-cluster-peers
            #:delete-peer
-
-
-           ;;; TODO
-           ;; #:post-add
-           ;; #:get-allocations # 0 & 1
+           ;; TODO #:post-add
+           #:get-allocations
+           ;;; TODO:
            ;; #:get-pins # 0 & 1
            ;; #:post-pins-sync
            ;; #:post-pins # cid and proto+path
@@ -60,6 +58,15 @@
 (defun delete-peer (peer-id)
   "Remove a peer"
   (http-delete "/peers/" peer-id))
+
+;; TODO post-add
+
+(defun get-allocations (&optional cid)
+  "List of pins and their allocations (pinset).
+If a CID is specified, show a single pin and its allocations (from the pinset)."
+  (if cid
+      (http-get-json "/allocations/" cid)
+      (http-get-json "/allocations")))
 
 ;; TODO ...
 
