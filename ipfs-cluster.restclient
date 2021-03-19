@@ -1,0 +1,94 @@
+# -*- restclient -*-
+
+# https://cluster.ipfs.io/documentation/reference/api/
+
+
+# This is currently the default if you're running a local IPFS Cluster.
+:cluster = http://127.0.0.1:9094
+
+
+# wget https://upload.wikimedia.org/wikipedia/commons/6/63/Neptune_-_Voyager_2_%2829347980845%29_flatten_crop.jpg
+# ./ipfs-cluster-ctl add Neptune_-_Voyager_2_\(29347980845\)_flatten_crop.jpg
+# ./ipfs-cluster-ctl status QmdzvHZt6QRJzySuVzURUvKCUzrgGwksvrsnqTryqxD4yn
+:cid = QmdzvHZt6QRJzySuVzURUvKCUzrgGwksvrsnqTryqxD4yn
+:cid = some-other-cid
+
+
+# IPFS = InterPlanetary File System, https://docs.ipfs.io/concepts/what-is-ipfs/
+# IPNS = InterPlanetary Name System, https://docs.ipfs.io/concepts/ipns/
+# IPLD = InterPlanetary Linked Data, https://docs.ipfs.io/concepts/ipld/
+:proto = ipfs
+#:proto = ipns
+#:proto = ipld
+
+
+# Cluster peer information
+GET :cluster/id
+
+# Cluster version
+GET :cluster/version
+
+# Cluster peers
+GET :cluster/peers
+
+# Remove a peer
+:peer-id = some-peer-id
+DELETE :cluster/peers/:peer-id
+
+# Add content to the cluster
+# Cf. https://docs.ipfs.io/reference/http/api/#api-v0-add for info about this one.
+POST :cluster/add
+
+# List of pins and their allocations (pinset)
+GET :cluster/allocations
+
+# Show a single pin and its allocations (from the pinset)
+GET :cluster/allocations/:cid
+
+# Local status of all tracked CIDs
+GET :cluster/pins
+
+# Sync local status from IPFS
+POST :cluster/pins/sync
+
+# Local status of single CID
+GET :cluster/pins/:cid
+
+# Pin a CID
+POST :cluster/pins/:cid
+
+# Pin using an IPFS/IPNS/IPLD path
+:path = some-path
+POST :cluster/pins/:proto/:path
+
+# Unpin a CID
+DELETE :cluster/pins/:cid
+
+# Unpin using an IPFS path
+DELETE :cluster/pins/:proto/:path
+
+# Sync a CID
+POST :cluster/:cid/sync
+
+# Recover a CID
+POST :cluster/:cid/recover
+
+# Recover all pins in the receiving Cluster peer
+POST :cluster/recover
+
+# Get a list of metric types known to the peer
+GET :cluster/monitor/metrics
+
+# Get a list of current metrics seen by this peer
+:metric = ping
+:metric = freespace
+GET :cluster/monitor/metrics/:metric
+
+# Display a list of alerts (metric expiration events)
+GET :cluster/health/alerts
+
+# Get connection graph
+GET :cluster/health/graph
+
+# Perform GC in the IPFS nodes
+POST :cluster/ipfs/gc
