@@ -17,6 +17,14 @@
         (yason:*parse-json-booleans-as-symbols* t))
     (yason:parse (dex:get (apply #'build-url url-components)))))
 
+(defun http-post (&rest url-components)
+  "Make an HTTP POST call to the IPFS Cluster."
+  (dex:post (apply #'build-url url-components)))
+
+(defun http-delete (&rest url-components)
+  "Make an HTTP DELETE call to the IPFS Cluster."
+  (dex:delete (apply #'build-url url-components)))
+
 (defun get-cluster-id ()
   "Cluster peer information"
   (http-get-json "/id"))
