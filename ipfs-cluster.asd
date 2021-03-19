@@ -27,6 +27,6 @@
   :version #.(version-string)
   :author author
   :license "MIT"
-  :depends-on ("dexador")
-  :components ((:module "source"
-                :components ((:file "main")))))
+  :depends-on ("alexandria" "dexador" "yason")
+  :components ((:module "source" :components ((:file "rest-api")
+                                              (:file "main" :depends-on "rest-api")))))

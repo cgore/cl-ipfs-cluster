@@ -1,12 +1,8 @@
 (defpackage #:ipfs-cluster
-  (:use #:cl)
+  (:use #:common-lisp)
   (:export "cluster-id"))
 (in-package #:ipfs-cluster)
 
-(defvar *cluster*
-  "http://127.0.0.1:9094"
-  "Base URL for the IPFS Cluster")
-
-(defun cluster-id ()
-  "Cluster peer information"
-  (dex:get (concatenate 'string *cluster* "/id")))
+(defun cluster-version ()
+  "Cluster version"
+  (gethash "version" (ipfs-cluster/rest-api:get-cluster-version)))
