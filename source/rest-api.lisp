@@ -1,30 +1,44 @@
 (defpackage #:ipfs-cluster/rest-api
-  (:use #:common-lisp)
-  (:export #:get-cluster-id
-           #:get-cluster-version
-           #:get-cluster-peers
-           #:delete-peer
+  (:use :common-lisp)
+  (:export :get-cluster-id
+           :get-cluster-version
+           :get-cluster-peers
+           :delete-peer
            ;; TODO #:post-add
-           #:get-allocations
-           #:get-pins
-           #:post-pins-sync
+           :get-allocations
+           :get-pins
+           :post-pins-sync
            ;;; TODO:
-           ;; #:post-pins # cid and proto+path
-           ;; #:delete-pins # cid and proto+path
-           #:post-cid-sync
-           #:post-cid-recover
-           #:post-recover
-           #:get-monitor-metrics
-           #:get-monitor-metrics-freespace
-           #:get-monitor-metrics-ping
-           #:get-health-alerts
-           #:get-health-graph
-           #:post-ipfs-gc))
+           ;; :post-pins # cid and proto+path
+           ;; :delete-pins # cid and proto+path
+           :post-cid-sync
+           :post-cid-recover
+           :post-recover
+           :get-monitor-metrics
+           :get-monitor-metrics-freespace
+           :get-monitor-metrics-ping
+           :get-health-alerts
+           :get-health-graph
+           :post-ipfs-gc))
 (in-package #:ipfs-cluster/rest-api)
 
 (defvar *cluster*
   "http://127.0.0.1:9094"
   "Base URL for the IPFS Cluster")
+
+(defgeneric url-component (thing))
+
+(defmethod url-component ((string string))
+  string)
+
+(defmethod url-component ((ipfs-cid ipfs-cluster/id:ipfs-cid))
+  (cid ipfs-cid))
+
+(defmethod url-component ((ipns-name ipfs-cluster/id:ipns-name))
+  (concatenate 'string "ipns/" (key ipns-name)))
+
+(defmethod url-component ((ipld-node-cid ipfs-cluster/id:ipld-node-cid))
+  (concatenate 'string "ipld/" (cid ipld-node-cid)))
 
 (defun build-url (&rest url-components)
   (apply #'concatenate 'string *cluster* url-components))

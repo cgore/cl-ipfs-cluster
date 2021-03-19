@@ -1,5 +1,9 @@
 (defpackage #:ipfs-cluster/id
-  (:use :common-lisp))
+  (:use :common-lisp)
+  (:export :ipfs-id
+           :ipfs-cid
+           :ipns-name
+           :ipld-node-cid))
 (in-package :ipfs-cluster/id)
 
 (defclass ipfs-id ()
