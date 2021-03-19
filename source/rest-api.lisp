@@ -8,11 +8,14 @@
   "http://127.0.0.1:9094"
   "Base URL for the IPFS Cluster")
 
+(defun build-url (&rest url-components)
+  (apply #'concatenate 'string *cluster* url-components))
+
 (defun http-get-json (&rest url-components)
   "Make an HTTP GET call to the IPFS Cluster, expecting JSON back, and parse."
   (let ((yason:*parse-json-arrays-as-vectors*   t)
         (yason:*parse-json-booleans-as-symbols* t))
-    (yason:parse (dex:get (apply #'concatenate 'string *cluster* url-components)))))
+    (yason:parse (dex:get (apply #'build-url url-components)))))
 
 (defun get-cluster-id ()
   "Cluster peer information"
