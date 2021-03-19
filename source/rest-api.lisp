@@ -1,7 +1,27 @@
 (defpackage #:ipfs-cluster/rest-api
   (:use #:common-lisp)
   (:export #:get-cluster-id
-           #:get-cluster-version))
+           #:get-cluster-version
+           #:get-cluster-peers
+           #:delete-peer
+
+
+           ;;; TODO
+           ;; #:post-add
+           ;; #:get-allocations # 0 & 1
+           ;; #:get-pins # 0 & 1
+           ;; #:post-pins-sync
+           ;; #:post-pins # cid and proto+path
+           ;; #:delete-pins # cid and proto+path
+           ;; ...
+
+
+           #:get-monitor-metrics
+           #:get-monitor-metrics-freespace
+           #:get-monitor-metrics-ping
+           #:get-health-alerts
+           #:get-health-graph
+           #:post-ipfs-gc))
 (in-package #:ipfs-cluster/rest-api)
 
 (defvar *cluster*
@@ -32,3 +52,38 @@
 (defun get-cluster-version ()
   "Cluster version"
   (http-get-json "/version"))
+
+(defun get-cluster-peers ()
+  "Cluster peers"
+  (http-get-json "/peers"))
+
+(defun delete-peer (peer-id)
+  "Remove a peer"
+  (http-delete "/peers/" peer-id))
+
+;; TODO ...
+
+(defun get-monitor-metrics (&optional metric)
+  "Get a list of current metrics seen by this peer.
+If called with no arguments, get a list of metric types known to the peer."
+  (if metric
+      (http-get-json "/monitor/metrics/" metric)
+      (http-get-json "/monitor/metrics")))
+
+(defun get-monitor-metrics-freespace ()
+  (get-monitor-metrics "freespace"))
+
+(defun get-monitor-metrics-ping ()
+  (get-monitor-metrics "ping"))
+
+(defun get-health-alerts ()
+  "Display a list of alerts (metric expiration events)"
+  (http-get-json "/health/alerts"))
+
+(defun get-health-graph ()
+  "Get connection graph"
+  (http-get-json "/health/graph"))
+
+(defun post-ipfs-gc ()
+  "Perform GC in the IPFS nodes"
+  (http-post "/ipfs/gc"))
