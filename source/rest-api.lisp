@@ -6,8 +6,8 @@
            #:delete-peer
            ;; TODO #:post-add
            #:get-allocations
+           #:get-pins
            ;;; TODO:
-           ;; #:get-pins # 0 & 1
            ;; #:post-pins-sync
            ;; #:post-pins # cid and proto+path
            ;; #:delete-pins # cid and proto+path
@@ -67,6 +67,13 @@ If a CID is specified, show a single pin and its allocations (from the pinset)."
   (if cid
       (http-get-json "/allocations/" cid)
       (http-get-json "/allocations")))
+
+(defun get-pins (&optional cid)
+  "Local status of all tracked CIDs
+If a CID is specified, local status of single CIDLocal status of single CID."
+  (if cid
+      (http-get-json "/pins/" cid)
+      (http-get-json "/pins")))
 
 ;; TODO ...
 
