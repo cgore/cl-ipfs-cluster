@@ -13,7 +13,7 @@
            ;; #:post-pins-sync
            ;; #:post-pins # cid and proto+path
            ;; #:delete-pins # cid and proto+path
-           ;; #:post-cid-sync
+           #:post-cid-sync
            #:post-cid-recover
            #:post-recover
            #:get-monitor-metrics
@@ -62,6 +62,10 @@
   (http-delete "/peers/" peer-id))
 
 ;; TODO ...
+
+(defun post-cid-sync (cid)
+  "Sunc a CID"
+  (http-post "/" cid "/sync"))
 
 (defun post-cid-recover (cid)
   "Recover a CID"
