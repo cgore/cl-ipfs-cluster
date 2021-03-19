@@ -7,8 +7,8 @@
            ;; TODO #:post-add
            #:get-allocations
            #:get-pins
+           #:post-pins-sync
            ;;; TODO:
-           ;; #:post-pins-sync
            ;; #:post-pins # cid and proto+path
            ;; #:delete-pins # cid and proto+path
            #:post-cid-sync
@@ -74,6 +74,10 @@ If a CID is specified, local status of single CIDLocal status of single CID."
   (if cid
       (http-get-json "/pins/" cid)
       (http-get-json "/pins")))
+
+(defun post-pins-sync ()
+  "Sync local status from IPFS"
+  (http-post "/pins/sync"))
 
 ;; TODO ...
 
