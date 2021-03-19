@@ -13,7 +13,9 @@
            ;; #:post-pins-sync
            ;; #:post-pins # cid and proto+path
            ;; #:delete-pins # cid and proto+path
-           ;; ...
+           ;; #:post-cid-sync
+           ;; #:post-cid-recover
+           ;; #:post-recover
 
 
            #:get-monitor-metrics
