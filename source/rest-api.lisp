@@ -15,9 +15,7 @@
            ;; #:delete-pins # cid and proto+path
            ;; #:post-cid-sync
            ;; #:post-cid-recover
-           ;; #:post-recover
-
-
+           #:post-recover
            #:get-monitor-metrics
            #:get-monitor-metrics-freespace
            #:get-monitor-metrics-ping
@@ -64,6 +62,10 @@
   (http-delete "/peers/" peer-id))
 
 ;; TODO ...
+
+(defun post-recover ()
+  "Recover all pins in the receiving Cluster peer"
+  (http-post "/recover"))
 
 (defun get-monitor-metrics (&optional metric)
   "Get a list of current metrics seen by this peer.
