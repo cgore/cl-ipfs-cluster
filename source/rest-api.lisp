@@ -14,7 +14,7 @@
            ;; #:post-pins # cid and proto+path
            ;; #:delete-pins # cid and proto+path
            ;; #:post-cid-sync
-           ;; #:post-cid-recover
+           #:post-cid-recover
            #:post-recover
            #:get-monitor-metrics
            #:get-monitor-metrics-freespace
@@ -62,6 +62,10 @@
   (http-delete "/peers/" peer-id))
 
 ;; TODO ...
+
+(defun post-cid-recover (cid)
+  "Recover a CID"
+  (http-post "/" cid "/recover"))
 
 (defun post-recover ()
   "Recover all pins in the receiving Cluster peer"
