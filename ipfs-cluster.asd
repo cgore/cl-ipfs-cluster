@@ -26,7 +26,7 @@
   :description "Library for interfacing with IPFS Clusters. "
   :version #.(version-string)
   :author author
-  :license "MIT"
+  :license "BSD 3-Clause"
   :depends-on ("alexandria" "dexador" "yason")
   :components ((:module "source" :components ((:file "rest-api")
                                               (:file "main" :depends-on "rest-api")))))
