@@ -29,5 +29,5 @@
   :license "BSD 3-Clause"
   :depends-on ("alexandria" "dexador" "yason")
   :components ((:module "source" :components ((:file "id")
-                                              (:file "rest-api" :depends-on "id")
-                                              (:file "main"     :depends-on "rest-api")))))
+                                              (:file "rest-api" :depends-on ("id"))
+                                              (:file "main"     :depends-on ("rest-api"))))))
