@@ -2,9 +2,12 @@
   (:use :common-lisp)
   (:export :id
            :cid
+           :make-cid
            :ipns
            :key
-           :ipld))
+           :make-ipns
+           :ipld
+           :make-ipld))
 (in-package :ipfs-cluster/id)
 
 (defclass id ()
@@ -19,12 +22,20 @@ a block of data in IPFS that is derived from its content.
 
 Cf. <https://docs.ipfs.io/concepts/content-addressing/#identifier-formats>"))
 
+(defun make-cid (cid)
+  "Constructor for CIDs"
+  (make-instance 'cid :cid cid))
+
 (defclass ipns (id)
   ((key :accessor key :initarg :key :initform nil
         :documentation "The string form of the actual key."))
   (:documentation "IPNS = InterPlanetary Name System.
 
 Cf. <https://docs.ipfs.io/concepts/ipns/>"))
+
+(defun make-ipns (key)
+  "Constructor for IPNSs"
+  (make-instance 'ipns :key key))
 
 (defclass ipld (id)
   ((cid :accessor cid :initarg :cid :initform nil
@@ -34,3 +45,7 @@ Cf. <https://docs.ipfs.io/concepts/ipns/>"))
 Cf. <https://docs.ipfs.io/concepts/ipld/>
 Cf. <https://medium.com/towardsblockchain/understanding-ipfs-in-depth-2-6-what-is-interplanetary-linked-data-ipld-c8c01551517b>
 Cf. <https://explore.ipld.io/#/explore/zdpuAujL3noEMamveLPQWJPY6CYZHhHoskYQaZBvRbAfVwR8S>"))
+
+(defun make-ipld (cid)
+  "Constructor for IPLDs"
+  (make-instance 'ipld :cid cid))
