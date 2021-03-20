@@ -25,6 +25,11 @@
   "http://127.0.0.1:9094"
   "Base URL for the IPFS Cluster")
 
+(defmacro with-cluster (cluster &body body)
+  "Simple wrapper macro to operate on a specified cluster."
+  `(let ((*cluster* ,cluster))
+     ,@body))
+
 (defgeneric url-component (thing))
 
 (defmethod url-component ((string string))
