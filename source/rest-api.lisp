@@ -8,9 +8,8 @@
            :get-allocations
            :get-pins
            :post-pins-sync
-           ;;; TODO:
-           ;; :post-pins # cid and proto+path
-           ;; :delete-pins # cid and proto+path
+           :post-pins
+           :delete-pins
            :post-cid-sync
            :post-cid-recover
            :post-recover
@@ -93,11 +92,17 @@ If a CID is specified, local status of single CIDLocal status of single CID."
   "Sync local status from IPFS"
   (http-post "/pins/sync"))
 
-;; TODO ...
-
 (defun post-cid-sync (cid)
   "Sunc a CID"
   (http-post "/" cid "/sync"))
+
+(defun post-pins (id)
+  "Pin using an IPFS/IPNS/IPLD path"
+  (http-post "/pins/" (url-component id)))
+
+(defun delete-pins (id)
+  "Unpin a CID"
+  (http-delete "/pins/" (url-component id)))
 
 (defun post-cid-recover (cid)
   "Recover a CID"
