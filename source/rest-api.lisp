@@ -31,14 +31,14 @@
 (defmethod url-component ((string string))
   string)
 
-(defmethod url-component ((ipfs-cid ipfs-cluster/id:ipfs-cid))
-  (cid ipfs-cid))
+(defmethod url-component ((cid ipfs-cluster/id:cid))
+  (ipfs-cluster/id:cid cid))
 
-(defmethod url-component ((ipns-name ipfs-cluster/id:ipns-name))
-  (concatenate 'string "ipns/" (key ipns-name)))
+(defmethod url-component ((ipns ipfs-cluster/id:ipns))
+  (concatenate 'string "ipns/" (ipfs-cluster/id:key ipns)))
 
-(defmethod url-component ((ipld-node-cid ipfs-cluster/id:ipld-node-cid))
-  (concatenate 'string "ipld/" (cid ipld-node-cid)))
+(defmethod url-component ((ipld ipfs-cluster/id:ipld))
+  (concatenate 'string "ipld/" (ipfs-cluster/id:cid ipld)))
 
 (defun build-url (&rest url-components)
   (apply #'concatenate 'string *cluster* url-components))
